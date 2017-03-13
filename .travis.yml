@@ -1,14 +1,32 @@
+language: csharp
 sudo: required
+
+os:
+  - osx
+  - linux
 
 services:
   - docker
 
-os:
-  - linux
-
 before_install:
-  - docker pull ubuntu:xenial
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker pull ubuntu:xenial ; fi
 
 script:
-  - docker build --file build/ci/Dockerfile --tag "sparkleshare:nightly" .
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build --file build/ci/Dockerfile --tag "container" . ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then nuget restore SparkleShare/Mac/SparkleShare.Mac.csproj ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then xbuild /p:Configuration=Release SparkleShare/Mac/SparkleShare.Mac.csproj ; fi
+
+before_deploy:
+  - docker cp container:sparkleshare*.tar.gz ./
+  - mv sparkleshare*.tar.gz sparkleshare-nightly-${TRAVIS_COMMIT}.tar.gz
+  - export DEPLOY_FILE=`ls sparkleshare-nightly-*.tar.gz`
+
+deploy:
+  provider: releases
+  api_key:
+    secure: Xar4U6o46qp7/4MmL5KNXCgmXTU+cHLGrzyPUMZG5qEXy93e4v6NHkxzQ2jYvyupGZwRfKs0dkRcpI3KVH48aFOnDF71yGRrReersSxlD512gXwxDXUnUCRVjBgdQhld5PCZObXIcjVi94REfNRY/lzqIQn5TDT7gQL5j8C6pEU=
+  file: "${DEPLOY_FILE}"
+  on:
+    repo: hbons/SparkleShare
+    branch: travis
 

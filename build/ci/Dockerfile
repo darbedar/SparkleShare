@@ -14,7 +14,8 @@ RUN apt-get install -y \
   mono-devel \
   mono-mcs \
   nant \
-  xsltproc
+  xsltproc \
+  zip
 
 RUN git clone https://github.com/hbons/notify-sharp && \
   cd notify-sharp/ && \
@@ -39,5 +40,5 @@ RUN cd ../
 
 COPY ./ ./
 RUN ./autogen.sh && \
-  make && make install 
+  make && make distcheck
 
