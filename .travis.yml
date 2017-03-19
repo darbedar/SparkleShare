@@ -13,11 +13,13 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then nuget restore SparkleShare/Mac/SparkleShare.Mac.csproj ; fi
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build --file build/ci/Dockerfile --tag "container" . ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build --file build/ci/Dockerfile --tag sparkleshare.org:nightly . ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then xbuild /p:Configuration=Release SparkleShare/Mac/SparkleShare.Mac.csproj ; fi
 
 before_deploy:
-  - docker run container
+  - docker ps -a
+  - docker run sparkleshare.org
+  - docker ps -a
   - docker cp container:sparkleshare*.tar.gz ./
   - mv sparkleshare*.tar.gz sparkleshare-nightly-${TRAVIS_COMMIT}.tar.gz
   - export DEPLOY_FILE=`ls sparkleshare-nightly-*.tar.gz`
