@@ -174,9 +174,6 @@
     <Compile Include="UserInterface\SetupWindow.cs" />
     <Compile Include="UserInterface\StatusIcon.cs" />
     <Compile Include="UserInterface\UserInterface.cs" />
-    <Compile Include="..\Common\Avatars.cs">
-      <Link>UserInterface\Avatars.cs</Link>
-    </Compile>
     <Compile Include="Controller.cs" />
   </ItemGroup>
   <ItemGroup>
