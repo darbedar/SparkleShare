@@ -18,7 +18,7 @@ script:
 
 before_deploy:
   - docker ps -a
-  - docker run sparkleshare.org
+  - docker run --name sparkleshare.org
   - docker ps -a
   - docker cp container:sparkleshare*.tar.gz ./
   - mv sparkleshare*.tar.gz sparkleshare-nightly-${TRAVIS_COMMIT}.tar.gz
