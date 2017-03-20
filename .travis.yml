@@ -16,7 +16,7 @@ before_install:
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build --file build/ci/Dockerfile --tag sparkleshare:nightly . ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xbuild /p:Configuration=ReleaseMac SparkleShare/Mac/SparkleShare.Mac.csproj ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xbuild /p:Configuration=ReleaseMac SparkleShare.sln ; fi
 
 before_deploy:
   - export DEPLOY_FILE=`docker run --name container -p 127.0.0.1:80:4567 sparkleshare:nightly find / -name sparkleshare*.tar.gz`
