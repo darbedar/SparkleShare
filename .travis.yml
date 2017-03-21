@@ -12,7 +12,8 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker pull ubuntu:xenial ; fi
   - git clone https://github.com/mono/maccore
   - git clone https://github.com/mono/monomac
-  - cd monomac && make
+  - cd monomac
+  - make
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build --file build/ci/Dockerfile --tag sparkleshare:nightly . ; fi
