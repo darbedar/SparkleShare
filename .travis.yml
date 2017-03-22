@@ -2,33 +2,40 @@ language: csharp
 sudo: required
 
 os:
-  - osx
   - linux
+  - osx
 
 services:
   - docker
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker pull ubuntu:xenial ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then nuget restore SparkleShare/Mac/SparkleShare.Mac.csproj ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then nuget restore brew install autoconf automake libtool pkg-config ; fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then nuget restore brew install autoconf automake libtool pkg-config ; fi
+  - git clone https://github.com/mono/maccore
+  - git clone https://github.com/mono/monomac
+  - cd monomac
+  - make
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build --file build/ci/Dockerfile --tag sparkleshare:nightly . ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then xbuild /p:Configuration=Release SparkleShare/Mac/SparkleShare.Mac.csproj ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xbuild /p:Configuration=ReleaseMac SparkleShare.sln ; fi
 
 before_deploy:
-  - export DEPLOY_FILE=`docker run --name container -p 127.0.0.1:80:4567 sparkleshare:nightly ls /sparkleshare*.tar.gz`
-  - docker cp container:/${DEPLOY_FILE} ./
+  - export DEPLOY_FILE=`docker run --name container -p 127.0.0.1:80:4567 sparkleshare:nightly find / -name sparkleshare*.tar.gz`
+  - docker cp container:${DEPLOY_FILE} ./
   - mv sparkleshare*.tar.gz sparkleshare-nightly-${TRAVIS_COMMIT}.tar.gz
   - export DEPLOY_FILE=`ls sparkleshare-nightly-*.tar.gz`
 
 deploy:
   provider: releases
-  api_key:
-    secure: Xar4U6o46qp7/4MmL5KNXCgmXTU+cHLGrzyPUMZG5qEXy93e4v6NHkxzQ2jYvyupGZwRfKs0dkRcpI3KVH48aFOnDF71yGRrReersSxlD512gXwxDXUnUCRVjBgdQhld5PCZObXIcjVi94REfNRY/lzqIQn5TDT7gQL5j8C6pEU=
+  prerelease: true
   file: "${DEPLOY_FILE}"
+  skip_cleanup: true
+  overwrite: true
+  draft: true
   on:
     repo: hbons/SparkleShare
     branch: travis
+  api_key:
+    secure: Xar4U6o46qp7/4MmL5KNXCgmXTU+cHLGrzyPUMZG5qEXy93e4v6NHkxzQ2jYvyupGZwRfKs0dkRcpI3KVH48aFOnDF71yGRrReersSxlD512gXwxDXUnUCRVjBgdQhld5PCZObXIcjVi94REfNRY/lzqIQn5TDT7gQL5j8C6pEU=
 
