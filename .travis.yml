@@ -10,11 +10,8 @@ services:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker pull ubuntu:xenial ; fi
-#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then nuget restore brew install autoconf automake libtool pkg-config ; fi
-  - git clone https://github.com/mono/maccore
-  - git clone https://github.com/mono/monomac
-  - cd monomac
-  - make
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-3.0.0.393.pkg ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; sudo installer -pkg xamarin.mac*.pkg -target / ; fi
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build --file build/ci/Dockerfile --tag sparkleshare:nightly . ; fi
