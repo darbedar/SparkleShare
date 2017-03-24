@@ -1,35 +1,39 @@
 language: csharp
-sudo: required
 
-os:
-  - linux
-  - osx
-
-services:
-  - docker
+matrix:
+  include:
+    - os: linux
+      services:
+        - docker
+    - os: osx
+      sudo: required
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker pull ubuntu:xenial ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-3.0.0.393.pkg ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo installer -pkg xamarin.mac*.pkg -target / ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then wget https://dl.xamarin.com/XamarinforMac/Mac/xamarin.mac-3.0.0.393.pkg ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then sudo installer -pkg xamarin.mac*.pkg -target / ; fi
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build --file build/ci/Dockerfile --tag sparkleshare:nightly . ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then xbuild /p:Configuration=ReleaseMac SparkleShare.sln ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then xbuild /p:Configuration=ReleaseMac SparkleShare.sln ; fi
 
 before_deploy:
-  - export DEPLOY_FILE=`docker run --name container -p 127.0.0.1:80:4567 sparkleshare:nightly find / -name sparkleshare*.tar.gz`
-  - docker cp container:${DEPLOY_FILE} ./
-  - mv sparkleshare*.tar.gz sparkleshare-nightly-${TRAVIS_COMMIT}.tar.gz
-  - export DEPLOY_FILE=`ls sparkleshare-nightly-*.tar.gz`
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DEPLOY_FILE=`docker run --name container sparkleshare:nightly find / -name sparkleshare*.tar.gz` ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker cp container:${DEPLOY_FILE} ./ ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv sparkleshare*.tar.gz sparkleshare-linux-nightly-${TRAVIS_COMMIT}.tar.gz ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then mv SparkleShare/Mac/bin/ReleaseMac/SparkleShare.app . ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then zip --recurse-paths sparkleshare-mac-nightly-${TRAVIS_COMMIT}.zip SparkleShare.app ; fi
 
 deploy:
   provider: releases
+  file: sparkleshare*nightly*
+  file_glob: true
+  name: nightly
+  tag_name: nightly
   prerelease: true
-  file: "${DEPLOY_FILE}"
+  draft: false
   skip_cleanup: true
   overwrite: true
-  draft: true
   on:
     repo: hbons/SparkleShare
     branch: travis
