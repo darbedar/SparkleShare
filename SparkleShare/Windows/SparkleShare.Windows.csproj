@@ -226,7 +226,6 @@
       <Link>Presets\planio.png</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Info.plist" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Common\Presets\ssnet.xml">
