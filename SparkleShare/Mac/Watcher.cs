@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.IO;
 
-using MonoMac.Foundation;
+using Foundation;
 
 namespace SparkleShare {
 

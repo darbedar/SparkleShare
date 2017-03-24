@@ -17,8 +17,8 @@
 
 using System;
 
-using MonoMac.AppKit;
-using MonoMac.Foundation;
+using AppKit;
+using Foundation;
 
 namespace SparkleShare {
 

@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkleShare.Mac", "SparkleShare\Mac\SparkleShare.Mac.csproj", "{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparkles", "Sparkles\Sparkles.csproj", "{2C914413-B31C-4362-93C7-1AE34F09112A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparkles.Git", "Sparkles\Git\Sparkles.Git.csproj", "{009FDCD7-1D57-4202-BB6D-8477D8C6B8EE}"
@@ -12,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkleShare.Linux", "SparkleShare\Linux\SparkleShare.Linux.csproj", "{5714D3CA-88A6-4330-A29D-4CA90D1D193C}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SparkleShare", "SparkleShare\Common\SparkleShare.shproj", "{F16E3683-B622-4654-B799-99C8D68AA963}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparkleShare.Mac", "SparkleShare\Mac\SparkleShare.Mac.csproj", "{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,16 +58,16 @@ Global
 		{728483AA-E34B-4441-BF2C-C8BC2901E4E0}.ReleaseDist|Any CPU.Build.0 = Release|Any CPU
 		{728483AA-E34B-4441-BF2C-C8BC2901E4E0}.ReleaseMac|Any CPU.ActiveCfg = ReleaseMac|Any CPU
 		{728483AA-E34B-4441-BF2C-C8BC2901E4E0}.DebugMac|Any CPU.ActiveCfg = DebugMac|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.ReleaseDist|Any CPU.ActiveCfg = ReleaseDist|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.ReleaseDist|Any CPU.Build.0 = ReleaseDist|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.ReleaseMac|Any CPU.ActiveCfg = ReleaseMac|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.ReleaseMac|Any CPU.Build.0 = ReleaseMac|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.DebugMac|Any CPU.ActiveCfg = DebugMac|Any CPU
-		{CF5BC8DB-A633-4FCC-8A3E-E3AC9B59FABC}.DebugMac|Any CPU.Build.0 = DebugMac|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.ReleaseDist|Any CPU.ActiveCfg = ReleaseDist|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.ReleaseDist|Any CPU.Build.0 = ReleaseDist|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.ReleaseMac|Any CPU.ActiveCfg = ReleaseMac|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.ReleaseMac|Any CPU.Build.0 = ReleaseMac|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.DebugMac|Any CPU.ActiveCfg = DebugMac|Any CPU
+		{8FCDF699-E2C3-4CB3-AF98-44198972AFC0}.DebugMac|Any CPU.Build.0 = DebugMac|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0

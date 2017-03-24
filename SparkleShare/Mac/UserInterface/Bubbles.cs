@@ -16,7 +16,7 @@
 
 
 using System;
-using MonoMac.Foundation;
+using Foundation;
 
 namespace SparkleShare {
     
@@ -38,7 +38,7 @@ namespace SparkleShare {
                 var notification = new NSUserNotification {
                     Title           = title,
                     InformativeText = subtext,
-                    DeliveryDate    = DateTime.Now
+                    DeliveryDate    = (NSDate) DateTime.Now
                 };
 
                 NSUserNotificationCenter center  = NSUserNotificationCenter.DefaultUserNotificationCenter;

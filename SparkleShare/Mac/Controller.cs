@@ -18,15 +18,14 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
-using Mono.Unix.Native;
-using MonoMac.Foundation;
-using MonoMac.AppKit;
+using Foundation;
+using AppKit;
 
 using Sparkles;
 using Sparkles.Git;
-using System.Linq;
 
 namespace SparkleShare {
 
@@ -63,14 +62,16 @@ namespace SparkleShare {
 
         public override bool CreateSparkleShareFolder ()
         {
-            if (!Directory.Exists (SparkleShare.Controller.FoldersPath)) {
-                Directory.CreateDirectory (SparkleShare.Controller.FoldersPath);
-                Syscall.chmod (SparkleShare.Controller.FoldersPath, (FilePermissions) 448); // 448 -> 700
+            if (Directory.Exists (SparkleShare.Controller.FoldersPath))
+                return false;
+            
+            Directory.CreateDirectory (SparkleShare.Controller.FoldersPath);
 
-                return true;
-            }
+            // TODO: Use proper API
+            var chmod = new Command ("chmod", "700 " + SparkleShare.Controller.FoldersPath);
+            chmod.StartAndWaitForExit ();
 
-            return false;
+            return true;
         }
 
 
@@ -217,13 +218,12 @@ namespace SparkleShare {
 
 
         public delegate void Code ();
-        readonly NSObject obj = new NSObject ();
 
         public void Invoke (Code code)
         {
             using (var a = new NSAutoreleasePool ())
             {
-                obj.InvokeOnMainThread (() => code ());
+                new NSObject ().InvokeOnMainThread (() => code ());
             }
         }
     }
