@@ -29,7 +29,6 @@ deploy:
   file: sparkleshare*nightly*
   file_glob: true
   name: nightly
-  tag_name: nightly
   prerelease: true
   draft: false
   skip_cleanup: true
