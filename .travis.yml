@@ -32,7 +32,7 @@ deploy:
   prerelease: true
   draft: false
   skip_cleanup: true
-  overwrite: true
+  overwrite: false
   on:
     repo: hbons/SparkleShare
     branch: travis
