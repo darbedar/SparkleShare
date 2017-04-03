@@ -37,7 +37,6 @@ deploy:
   skip_cleanup: true
   overwrite: true
   on:
-    tags: true
     repo: hbons/SparkleShare
     branch: travis
   api_key:
