@@ -18,6 +18,8 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]];   then xbuild /p:Configuration=ReleaseMac SparkleShare.sln ; fi
 
 before_deploy:
+  - git tag nightly HEAD
+  - git push --tags
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DEPLOY_FILE=`docker run --name container sparkleshare:nightly find / -name sparkleshare*.tar.gz` ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker cp container:${DEPLOY_FILE} ./ ; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv sparkleshare*.tar.gz sparkleshare-linux-nightly-${TRAVIS_COMMIT}.tar.gz ; fi
@@ -29,11 +31,13 @@ deploy:
   file: sparkleshare*nightly*
   file_glob: true
   name: nightly
+  tag_name: nightly
   prerelease: true
   draft: false
   skip_cleanup: true
-  overwrite: false
+  overwrite: true
   on:
+    tags: true
     repo: hbons/SparkleShare
     branch: travis
   api_key:
